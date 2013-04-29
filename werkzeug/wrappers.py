@@ -20,7 +20,7 @@
     :copyright: (c) 2011 by the Werkzeug Team, see AUTHORS for more details.
     :license: BSD, see LICENSE for more details.
 """
-from werkzeug._compat import urlparse
+from werkzeug._compat import urlparse, to_bytes
 from datetime import datetime, timedelta
 import six
 
@@ -833,14 +833,7 @@ class BaseResponse(object):
         if __debug__:
             _warn_if_string(self.response)
         for item in self.response:
-            if isinstance(item, six.binary_type):
-                yield item
-            elif isinstance(item, six.text_type):
-                yield item.encode(charset)
-            elif six.PY3:
-                yield str(item).encode(charset)
-            else:
-                yield str(tem)
+            yield to_bytes(item, charset)
 
     def set_cookie(self, key, value='', max_age=None, expires=None,
                    path='/', domain=None, secure=None, httponly=False):
