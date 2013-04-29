@@ -91,6 +91,7 @@ r"""
 import pickle
 from hmac import new as hmac
 from time import time
+import six
 from werkzeug.urls import url_quote_plus, url_unquote_plus
 from werkzeug._internal import _date_to_unix
 from werkzeug.contrib.sessions import ModificationTrackingDict
