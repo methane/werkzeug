@@ -25,3 +25,24 @@ def iterlists(d, *a, **kw):
 
 def iterlistvalues(d, *a, **kw):
     return getattr(d, _iterlistvalues)(*a, **kw)
+
+if six.PY3:
+    def to_unicode(o, encoding='utf-8', errors='strict'):
+        if isinstance(o, bytes):
+            return o.decode(encoding, errors)
+        return str(o)
+
+    def to_bytes(o, encoding='utf-8', errors='strict'):
+        if isinstance(o, bytes):
+            return o
+        return str(o).encode(encoding, errors)
+else:
+    def to_unicode(o, encoding='utf-8', errors='strict'):
+        if isinstance(o, unicode):
+            return o
+        return str(o).decode(encoding, errors)
+
+    def to_bytes(o, encoding='utf-8', errors='strict'):
+        if isinstance(o, unicode):
+            return o.decode(encoding, errors)
+        return str(o)

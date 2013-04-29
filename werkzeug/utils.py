@@ -17,6 +17,7 @@ import sys
 import six
 from six import next
 
+from werkzeug._compat import to_unicode
 from werkzeug._internal import _iter_modules, _DictAccessorProperty, \
      _parse_signature, _missing
 
@@ -193,8 +194,8 @@ class HTMLBuilder(object):
                 return buffer
             buffer += '>'
 
-            children_as_string = ''.join([six.text_type(x) for x in children
-                                         if x is not None])
+            children_as_string = u''.join(to_unicode(x) for x in children
+                                          if x is not None)
 
             if children_as_string:
                 if tag in self._plaintext_elements:
