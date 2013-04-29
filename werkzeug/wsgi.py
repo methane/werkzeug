@@ -205,7 +205,7 @@ def extract_path_info(environ_or_baseurl, path_or_url, charset='utf-8',
     from werkzeug.urls import uri_to_iri, url_fix
 
     def _as_iri(obj):
-        if not isinstance(obj, unicode):
+        if not isinstance(obj, six.text_type):
             return uri_to_iri(obj, charset, errors)
         return obj
 

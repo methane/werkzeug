@@ -193,7 +193,7 @@ class HTMLBuilder(object):
                 return buffer
             buffer += '>'
 
-            children_as_string = ''.join([unicode(x) for x in children
+            children_as_string = ''.join([six.text_type(x) for x in children
                                          if x is not None])
 
             if children_as_string:
@@ -279,7 +279,7 @@ def secure_filename(filename):
 
     :param filename: the filename to secure
     """
-    if isinstance(filename, unicode):
+    if isinstance(filename, six.text_type):
         from unicodedata import normalize
         filename = normalize('NFKD', filename).encode('ascii', 'ignore')
     for sep in os.path.sep, os.path.altsep:
@@ -312,8 +312,8 @@ def escape(s, quote=False):
         return ''
     elif hasattr(s, '__html__'):
         return s.__html__()
-    elif not isinstance(s, basestring):
-        s = unicode(s)
+    elif not isinstance(s, six.string_types):
+        s = six.text_type(s)
     s = s.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
     if quote:
         s = s.replace('"', "&quot;")
@@ -357,6 +357,7 @@ def redirect(location, code=302):
     """
     from werkzeug.wrappers import BaseResponse
     display_location = escape(location)
+    # TODO: IRI vs URI
     if isinstance(location, unicode):
         from werkzeug.urls import iri_to_uri
         location = iri_to_uri(location)

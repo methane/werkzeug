@@ -233,7 +233,7 @@ class SecureCookie(ModificationTrackingDict):
         :param secret_key: the secret key used to serialize the cookie.
         :return: a new :class:`SecureCookie`.
         """
-        if isinstance(string, unicode):
+        if isinstance(string, six.text_type):
             string = string.encode('utf-8', 'replace')
         try:
             base64_hash, data = string.split('?', 1)
